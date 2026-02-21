@@ -1,4 +1,4 @@
-## Technology Atack
+## Technology Stack
 
 - React
 - Phaser.js (for 2D game engine)
