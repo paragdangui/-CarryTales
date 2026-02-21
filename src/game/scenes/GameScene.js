@@ -57,7 +57,7 @@ export default class GameScene extends Phaser.Scene {
       roofColor: 0xCC3333,
     });
     tensHouse.setDepth(5);
-    tensHouse.x = -300; // start off-screen
+    tensHouse.setVisible(false);
 
     const onesHouse = new House(this, 850, groundY, {
       label: 'ONES',
@@ -65,7 +65,7 @@ export default class GameScene extends Phaser.Scene {
       roofColor: 0x2255CC,
     });
     onesHouse.setDepth(5);
-    onesHouse.x = width + 300; // start off-screen
+    onesHouse.setVisible(false);
 
     // Pre-populate tens house with 4 and 5
     tensHouse.addDigitInside('4', -20);

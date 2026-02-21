@@ -20,6 +20,9 @@ export default class House extends Phaser.GameObjects.Container {
   constructor(scene, x, y, opts = {}) {
     super(scene, x, y);
 
+    /** Original x position – used as slide-in target. */
+    this._homeX = x;
+
     this.label = opts.label || 'HOUSE';
     this.bodyColor = opts.bodyColor ?? 0x8B4513;
     this.roofColor = opts.roofColor ?? 0xCC3333;
@@ -242,8 +245,9 @@ export default class House extends Phaser.GameObjects.Container {
    * @returns {Promise<void>}
    */
   slideIn(direction, duration = 800) {
-    const targetX = this.x;
+    const targetX = this._homeX;
     this.x = direction === 'left' ? -300 : this.scene.scale.width + 300;
+    this.setVisible(true);
     return tweenPromise(this.scene, {
       targets: this,
       x: targetX,
