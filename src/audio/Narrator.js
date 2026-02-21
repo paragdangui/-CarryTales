@@ -9,6 +9,9 @@ const Narrator = {
   /** @type {SpeechSynthesisUtterance|null} */
   _current: null,
 
+  /** When true, TTS is skipped but subtitles still display. */
+  muted: false,
+
   /**
    * Speak the given text using the browser's TTS engine.
    * @param {string} text
@@ -20,8 +23,8 @@ const Narrator = {
 
       EventBus.emit('subtitle', text);
 
-      if (!window.speechSynthesis) {
-        // Fallback: just wait a reasonable reading time
+      if (this.muted || !window.speechSynthesis) {
+        // Show subtitle for a readable duration, then clear
         setTimeout(() => {
           EventBus.emit('subtitle', '');
           resolve();
