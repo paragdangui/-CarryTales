@@ -30,13 +30,6 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.on('complete', () => {
       label.setText('Ready!');
     });
-
-    // --- Asset placeholders (uncomment and fill paths as assets are added) ---
-    // this.load.image('bg_street', '/assets/images/bg_street.png');
-    // this.load.image('house_ones', '/assets/images/house_ones.png');
-    // this.load.image('house_tens', '/assets/images/house_tens.png');
-    // this.load.image('digit_7', '/assets/images/digit_7.png');
-    // this.load.image('digit_1', '/assets/images/digit_1.png');
   }
 
   create() {

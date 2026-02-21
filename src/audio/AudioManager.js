@@ -1,4 +1,5 @@
 import { Howl } from 'howler';
+import Narrator from '@/audio/Narrator.js';
 
 /**
  * Logical key → asset file paths (mp3 + ogg for cross-browser support).
@@ -99,6 +100,29 @@ const AudioManager = {
   /** Mute or unmute a specific sound. */
   mute(key, bool) {
     _instances.get(key)?.mute(bool);
+  },
+
+  /**
+   * Play a narration track. Falls back to TTS if audio file is missing.
+   * @param {string} key – sound registry key
+   * @param {string} fallbackText – text to speak via TTS if audio fails
+   * @returns {Promise<void>}
+   */
+  async narrate(key, fallbackText) {
+    const howl = _getInstance(key);
+    if (howl) {
+      return new Promise((resolve) => {
+        const id = howl.play();
+        howl.once('end', resolve, id);
+        howl.once('loaderror', () => {
+          Narrator.speak(fallbackText).then(resolve);
+        });
+        howl.once('playerror', () => {
+          Narrator.speak(fallbackText).then(resolve);
+        });
+      });
+    }
+    return Narrator.speak(fallbackText);
   },
 
   /** Stop every active sound. */
